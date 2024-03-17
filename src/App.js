@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState,useEffect,useRef } from "react";
 import JewelryContext from "./Context/JewelryContext";
 import Login from "./Components/Login";
 import HomePage from "./Pages/HomePage";
@@ -11,6 +11,8 @@ import {QueryClientProvider,QueryClient} from '@tanstack/react-query'
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { PayPalScriptProvider} from "@paypal/react-paypal-js";
+import {checkExpirationTime,updateExpirationTime} from "./utils/EndSession.js"
 
 const queryClient = new QueryClient() 
 
@@ -31,6 +33,41 @@ function App() {
   const [loginState,setLoginState] = useState(false)
   const [subtotal,setSubtotal] = useState(0)
   const [limit,setLimit] = useState(8)
+  const [test,setTest] = useState([{name:'product 1',quantity:10,cost:20.99},{name:'product 2',quantity:20,cost:40.99}]);
+  const ref = useRef(null);
+  useEffect(()=>{
+
+    if(isLoggedIn.status=== true ){
+    const interval = setInterval(()=>{
+      checkExpirationTime(setIsLoggedIn,setLoginState)
+      console.log('bye')
+    },1000)
+
+    return ()=>clearInterval(interval)
+  }
+  },[isLoggedIn])
+
+  useEffect(()=>{
+    if(isLoggedIn.status=== true ){
+    updateExpirationTime();
+    const element = ref.current;
+
+    element.addEventListener('click', updateExpirationTime);
+    element.addEventListener('mousemove', updateExpirationTime);
+    element.addEventListener('keypress', updateExpirationTime);
+    element.addEventListener('wheel', updateExpirationTime);
+
+    alert('hi')
+    
+    return () => {
+      element.removeEventListener('click', updateExpirationTime);
+      element.removeEventListener('mousemove', updateExpirationTime);
+      element.removeEventListener('keypress', updateExpirationTime);
+      element.removeEventListener('wheel', updateExpirationTime);
+    }
+  }
+ 
+  },[isLoggedIn])
 
   useEffect(()=>{
     fetch('http://localhost:4000/jewelry/featured?limit='+limit)
@@ -69,15 +106,21 @@ function App() {
       } catch (err){console.log(err)}
     }
   },[])
-
+console.log(cart)
+  const initialOptions = {
+    clientId: "AVBr11klLWeMGjAkfmlZo9iHSL8si1VPP1zfMFLNOsOT5qxO44Fad7LqWeap9p0CClw0U73GDWDy90qe",
+    currency: "USD",
+    intent: "capture",
+};
          
 
   return (
     // <QueryClientProvider client = {queryClient}>
-    <JewelryContext.Provider value={({jewelry,setJewelry,featuredProducts,colorFilter,sizeFilter,categoryFilter,setFilter,filter,filterOptions,setFilterOptions,isLoggedIn,setIsLoggedIn,accountMenu,setAccountMenu,user,setUser,cart,setCart,quantity,setQuantity,loginState,setLoginState,subtotal,setSubtotal,limit,setLimit})}>
-      <div onClick={()=>{
+    <PayPalScriptProvider options={initialOptions}>
+    <JewelryContext.Provider value={({jewelry,setJewelry,featuredProducts,colorFilter,sizeFilter,categoryFilter,setFilter,filter,filterOptions,setFilterOptions,isLoggedIn,setIsLoggedIn,accountMenu,setAccountMenu,user,setUser,cart,setCart,quantity,setQuantity,loginState,setLoginState,subtotal,setSubtotal,limit,setLimit,test,setTest})}>
+      <div ref={ref} onClick={()=>{
           if (accountMenu){ setAccountMenu(!accountMenu)}
-        
+          
         }}>
       <BrowserRouter>
         <Routes>
@@ -94,6 +137,7 @@ function App() {
       </BrowserRouter>
       </div>
     </JewelryContext.Provider>
+    </PayPalScriptProvider>
     //<ReactQueryDevtools initialIsOpen={true} buttonPosition="bottom-right"/>
     //</QueryClientProvider>
     

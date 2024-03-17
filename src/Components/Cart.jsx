@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import CartList from './CartList'
 import { useParams } from 'react-router-dom'
 import JewelryContext from '../Context/JewelryContext'
+import Payment from './Payment/Payment'
 
 function Cart() {
 
@@ -12,7 +13,7 @@ function Cart() {
     const [isLoading,setIsLoading] = useState(true)
    
   
-    console.log(userid)
+  
   
    
     useEffect(()=>{
@@ -21,10 +22,11 @@ function Cart() {
 
 
     useEffect(()=>{
-        fetch('http://localhost:4000/user/cart/'+user._id)
+        fetch('http://localhost:4000/user/cart/'+userid)
         .then(res=>res.json())
-        .then((json)=>{setCart(json.data.cart)})
+        .then((json)=>setCart(json.data.cart))
         .catch(err=>console.log(err))
+        setIsLoading(false)
     },[])
 
 
@@ -73,7 +75,7 @@ function Cart() {
    // if(isLoading && cart.length === 0 ){return( <div className='h-screen flex items-center justify-center '><h2>Loading...</h2></div>)}
     
   return (
-    <div className='bg-[#ffeeee] py-4 relative'>
+    <div className='bg-[#ffeeee] py-10 relative'>
         <div className='flex '>
 
        
@@ -81,7 +83,7 @@ function Cart() {
         {/* <div className={user.cart.length > 0 ?'' : 'hidden'}> */}
             {
             
-                cart.length !== 0
+                cart.length !== 0 && isLoading === false
                 ?
                     cart.map((c)=>(<CartList key={c._id} id={c._id} name={c.name} color={c.color} size={c.size}  img={c.img} price={c.price} quantity={c.quantity} sumItems={sumItems} removeItem={removeItem} />))
                 :
@@ -99,16 +101,21 @@ function Cart() {
         </div>
         <hr/>
         <div className='py-20 w-[20%]'>
-        <div className='  fixed   '>
+        <div className='fixed top-[15%] '>
+            
                     <div className='flex justify-center space-x-10 ' >
                         <p>Subtotal</p>
-                            <p>${subtotal}</p>
-                        </div>
+                        <p>${subtotal}</p>
+                    </div>
                         
 
-                <div className='flex justify-center mt-5'>
+                <div className=' justify-center mt-5 flex flex-col'>
                   <button className=' bg-[#EA4492] text-white p-3'>CHECKOUT</button>
-            </div>
+                  <Payment/>
+
+                 </div>
+            
+                   
             
             </div>
           

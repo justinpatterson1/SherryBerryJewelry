@@ -9,11 +9,21 @@ function CartList({id,name,color,size,img,price,quantity,removeItem,sumItems}) {
     const [cartQuantity,setCartQuantity] = useState(quantity)
     const [updateCompleted,setUpdateCompleted] = useState(true)
 
+    // useEffect(()=>{
+    //     fetch(`http://localhost:4000/user/${user._id}`)
+    //     .then(res => res.json() )
+    //     .then(json =>{set})
+    // },[])
+
        // useMemo(()=>sumItems(),[cartQuantity])
 
     //    useEffect(()=>{
     //     sumItems()
     //    },[cartQuantity])
+
+    console.log(user)
+    console.log(cart)
+    
 
     const updateAPI = ()=>{
        setUpdateCompleted(false)
@@ -75,13 +85,20 @@ function CartList({id,name,color,size,img,price,quantity,removeItem,sumItems}) {
 
     }
 
-const addQuantity = ()=>{
+const addQuantity = (id)=>{
+console.log(id)
      if(updateCompleted){
-            const cartToAdd = [...user.cart]
+            const cartToAdd = [...cart]
+            let userCart  = [...user.cart]
+            userCart = []
 
-        const currentItem = cartToAdd.find((c)=>{return c._id === id})
-        
+            console.log(userCart)
+
+        const currentItem = cartToAdd.find((c)=>{return c._id == id})
+        console.log(currentItem)
         currentItem.quantity = currentItem.quantity + 1
+
+        userCart.push(cartToAdd)
 
         const newTotal = ( parseFloat(subtotal)+ parseFloat(currentItem.price)).toFixed(2)
        
@@ -91,7 +108,9 @@ const addQuantity = ()=>{
         setSubtotal(newTotal)
         updateAPI()
        
-   }
+  }
+
+  console.log('hi')
     
 }
     
@@ -119,13 +138,13 @@ const addQuantity = ()=>{
                 <button className='w-8 h-6 bg-slate-300 text-center flex items-center justify-center hover:cursor-pointer' disabled={cartQuantity === 1} onClick={()=>{
                     // setCartQuantity(quantity - 1)
                     // setQuantity()
-                    setUpdateCompleted(false)
+                   setUpdateCompleted(false)
                     SubQuantity()
                 }}>-</button>
                     <div> {cartQuantity}</div>   
                 <button className='w-8 h-6 bg-slate-300 text-center flex items-center justify-center hover:cursor-pointer'onClick={()=>{
-                   // setUpdateCompleted(false)
-                   addQuantity()
+                   setUpdateCompleted(false)
+                   addQuantity(id)
                 }}>+</button>
             </div>
             

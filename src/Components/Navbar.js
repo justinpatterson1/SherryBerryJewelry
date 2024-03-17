@@ -69,6 +69,7 @@ function Navbar() {
                             <li>
                                 <p className='hover:text-[#EA4492] cursor-pointer' onClick={(()=>{
                                     localStorage.removeItem('token')
+                                    localStorage.removeItem("token_expiration")
                                     setIsLoggedIn({...isLoggedIn,status:false})
                                     navigate("/")
                                     

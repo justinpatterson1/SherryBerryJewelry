@@ -35,7 +35,11 @@ function LoginForm() {
             })
             .then(res => res.json())
             .then((json)=>{
+                const expirationDate = Date.now() + ((1000 * 60) * 60)
                 localStorage.setItem("token",json.jwt);
+
+                //console.log(`Expiration Date:${expirationDate}`)
+                localStorage.setItem("token_expiration",expirationDate)
                 //const token = localStorage.getItem("token");
                 const userInfo = jwtDecode(json.jwt);
                 if (userInfo){
