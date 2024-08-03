@@ -2,6 +2,7 @@ import React, { useCallback, useEffect , useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import addToCart from '../utils/addToCart'
 import JewelryContext from '../Context/JewelryContext'
+import { toast} from 'react-toastify';
 
 function ProductDisplay() {
     const [product,setProduct] = useState([])
@@ -9,6 +10,19 @@ function ProductDisplay() {
     const [count,setCount] = useState(1)
     const {id} = useParams();
 
+    const notify = () => toast("Item Added to Cart!",{
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      
+        });
+
+        
     const{quantity,user,setUser} = useContext(JewelryContext)
     useEffect(()=>{
         fetch(`http://localhost:4000/jewelry/${id}`)
@@ -58,6 +72,7 @@ function ProductDisplay() {
                 
                 <button className='bg-[#EA4492] w-[15rem] h-[3rem] hover:text-white' onClick={()=>{
                      addToCart(product._id,product.price,product.img,product.name,product.catergory,product.size,count,user,setUser)
+                     notify()
                 }}>Add to cart</button>
             </div>
         </div>

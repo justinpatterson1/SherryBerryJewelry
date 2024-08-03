@@ -46,14 +46,14 @@ function Product() {
            
     
             const Category = new Set(jewelry.map((j)=>{
-            return j['catergory']
+            return j['category']
             }))
             
     
            return({
             colors:Array.from(Colors),
             size:Array.from(Size),
-            catergory:Array.from(Category)
+            category:Array.from(Category)
             })
     }
 

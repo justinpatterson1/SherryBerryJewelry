@@ -129,18 +129,18 @@ if(filterOptions.length === 0){return <h2>Loading....</h2>}
                     
                 {
                     
-                    filterOptions.catergory.map((catergory)=>(
+                    filterOptions.category.map((category)=>(
                     <div className='flex flex-col space-x-5'>
                         
                         <div className='grid grid-cols-2 w-[15rem]'>
-                        <input type='checkbox' name='size' id='size' value={catergory} onClick={(evt)=>{
+                        <input type='checkbox' name='size' id='size' value={category} onClick={(evt)=>{
                             setFilter([...filter,evt.target.value])
                             //filterProducts()
                            
                         }}/>
                         
                       
-                        <label htmlFor="size" className='text-center'>{catergory}</label>
+                        <label htmlFor="size" className='text-center'>{category}</label>
                         </div>
                     </div>
                     

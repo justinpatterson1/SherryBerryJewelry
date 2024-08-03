@@ -30,6 +30,10 @@ h1,h2,h3,h4,h5,h4{
   font-weight:800;
 }
 
-p{
-  
+.image{
+  -webkit-mask-repeat:no-repeat;
+}
+
+.blob{
+  -webkit-mask-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8c3ZnIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGZpbGw9IiNGRjAwNjYiIGQ9Ik00NS42LC00NC45QzU5LjIsLTMyLjEsNzAuMywtMTYsNzAuMywwQzcwLjIsMTYsNTkuMSwzMS45LDQ1LjUsNDUuN0MzMS45LDU5LjQsMTYsNzEsLTEsNzJDLTE4LDczLC0zNiw2My41LC00Ny4zLDQ5LjdDLTU4LjcsMzYsLTYzLjUsMTgsLTY1LjEsLTEuNkMtNjYuNywtMjEuMSwtNjUuMSwtNDIuMywtNTMuNywtNTUuMkMtNDIuMywtNjgsLTIxLjEsLTcyLjYsLTIuNiwtNzBDMTYsLTY3LjUsMzIuMSwtNTcuOCw0NS42LC00NC45WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAwIDEwMCkiIC8+Cjwvc3ZnPgo=);
 }

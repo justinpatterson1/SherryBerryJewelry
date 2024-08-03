@@ -6,6 +6,7 @@ import LoginPage from "./Pages/LoginPage";
 import ProductPage from "./Pages/ProductPage";
 import ProductDescription from "./Pages/ProductDescription";
 import CartPage from "./Pages/CartPage";
+import AboutUsPage from "./Pages/AboutPage";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import {QueryClientProvider,QueryClient} from '@tanstack/react-query'
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -13,6 +14,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { PayPalScriptProvider} from "@paypal/react-paypal-js";
 import {checkExpirationTime,updateExpirationTime} from "./utils/EndSession.js"
+import ContactPage from "./Pages/ContactPage.jsx";
+import WaistBeadPage from "./Pages/WaistBeadPage.jsx";
+import { ToastContainer} from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient() 
 
@@ -31,6 +37,7 @@ function App() {
   const [isLoggedIn,setIsLoggedIn] = useState({status:false,user:{}})
   const [quantity,setQuantity] = useState(1)
   const [loginState,setLoginState] = useState(false)
+  const [loginStatus,setLoginStatus] = useState(false)
   const [subtotal,setSubtotal] = useState(0)
   const [limit,setLimit] = useState(8)
   const [test,setTest] = useState([{name:'product 1',quantity:10,cost:20.99},{name:'product 2',quantity:20,cost:40.99}]);
@@ -57,7 +64,7 @@ function App() {
     element.addEventListener('keypress', updateExpirationTime);
     element.addEventListener('wheel', updateExpirationTime);
 
-    alert('hi')
+  
     
     return () => {
       element.removeEventListener('click', updateExpirationTime);
@@ -70,7 +77,7 @@ function App() {
   },[isLoggedIn])
 
   useEffect(()=>{
-    fetch('http://localhost:4000/jewelry/featured?limit='+limit)
+    fetch('http://localhost:4000/jewelry?featured=true&limit='+limit)
     .then(res => res.json())
     .then(json => {
 
@@ -132,9 +139,23 @@ console.log(cart)
             <Route path="/" element={<HomePage/>} />
             <Route path="/Product" element={<ProductPage/>}/> 
             <Route path='/Product/:id' element={<ProductDescription/>} />
+            <Route path='/About-Us' element={<AboutUsPage/>} />
+            <Route path='/Contact' element={<ContactPage/>} />
+            <Route path='/Waistbeads' element={<WaistBeadPage/>} />
            
         </Routes>
       </BrowserRouter>
+      <ToastContainer position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+  />
       </div>
     </JewelryContext.Provider>
     </PayPalScriptProvider>

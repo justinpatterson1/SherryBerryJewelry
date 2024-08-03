@@ -45,17 +45,20 @@ function PopularCategories() {
         {
          id:1,
          img:"waist-bead-pic.jpg",
-         name:"Waist-Bead"
+         name:"Waist-Bead",
+         link:"/Waistbeads"
         },
         {
          id:2,
          img:'jewelry-girl-pic.jpg',
-         name:'Jewelry'
+         name:'Jewelry',
+         link:"/product"
         },
         {
          id:3,
          img:'merch-pic.jpg',
-         name:'After-Care'
+         name:'After-Care',
+         link:'/after-care'
         },
       
      ])
@@ -76,7 +79,7 @@ function PopularCategories() {
      
         <div className='hidden md:block  md:flex md:space-x-20 md:justify-center md:items-end md:place-items-center md:mb-10  w-full '>
         {
-            catergory.map((catergory) => (<PopularCategorylist key={catergory.id} id={catergory.id} img={catergory.img}  name={catergory.name}/>))
+            catergory.map((catergory) => (<PopularCategorylist key={catergory.id} id={catergory.id} img={catergory.img}  name={catergory.name} link={catergory.link}/>))
         }
       
         </div>

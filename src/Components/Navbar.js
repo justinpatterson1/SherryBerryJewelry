@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import JewelryContext from '../Context/JewelryContext';
 
 function Navbar() {
-    const {isLoggedIn,setIsLoggedIn,accountMenu,setAccountMenu} = useContext(JewelryContext)
+    const {isLoggedIn,setIsLoggedIn,accountMenu,setAccountMenu,setLoginStatus} = useContext(JewelryContext)
     const [hideNavbar,setHideNavbar] = useState(false)
    
     const navigate = useNavigate()
@@ -36,11 +36,19 @@ function Navbar() {
                     <Link to="/" >Home </Link>
                 </li>
                 <li className='hover:border-b-2 border-[#EA4492]'>
-                    <Link to="/product"> Product </Link>
+                    <Link to="/product"> Jewelry </Link>
                     </li>
-                <li className='hover:border-b-2 border-[#EA4492]'>About</li>
-                <li className='hover:border-b-2 border-[#EA4492]'>Support</li>
-                <li className='hover:border-b-2 border-[#EA4492]'>Contact</li>
+               
+                <li className='hover:border-b-2 border-[#EA4492]'>After-Care</li>
+                <li className='hover:border-b-2 border-[#EA4492]'>
+                    <Link to="/Waistbeads"> Waist-Beads </Link>
+                </li>
+                <li className='hover:border-b-2 border-[#EA4492]'>
+                  <Link to="/About-Us">About</Link>  
+                </li>
+                <li className='hover:border-b-2 border-[#EA4492]'>
+                    <Link to='/Contact'>Contact</Link>
+                    </li>
             </ul>
             </div>
         <div className=' md:w-1/2 flex justify-center md:space-x-10  space-x-5 items-center md:m-0 my-8'>
@@ -71,6 +79,7 @@ function Navbar() {
                                     localStorage.removeItem('token')
                                     localStorage.removeItem("token_expiration")
                                     setIsLoggedIn({...isLoggedIn,status:false})
+                                    setLoginState(false)
                                     navigate("/")
                                     
                                 })}>Sign Out</p>

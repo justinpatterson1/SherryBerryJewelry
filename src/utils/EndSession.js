@@ -20,7 +20,7 @@ const checkExpirationTime  = (setIsLoggedIn,setLoginState)=>{
 
 const updateExpirationTime = ()=>{
 
-    const expirationDate = Date.now() + 10000
+    const expirationDate = Date.now() + ((1000 * 60) * 60)
 
     localStorage.setItem("token_expiration",expirationDate)
 }
